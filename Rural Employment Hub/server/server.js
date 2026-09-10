@@ -33,8 +33,9 @@ const __dirname = dirname(__filename);
 const app = express();
 
 // ============ CORS MIDDLEWARE (must be first — before helmet) ============
+const configuredCorsOrigin = (process.env.CORS_ORIGIN || "http://localhost:5173").replace(/\/$/, "");
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  origin: configuredCorsOrigin,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
@@ -132,24 +133,28 @@ const connectDB = async (maxRetries = 3, retryDelay = 2000) => {
 // ============ START SERVER ============
 const PORT = process.env.PORT || 5000;
 
-connectDB().then((connected) => {
-  const server = app.listen(PORT, () => {
-    const status = connected ? "🚀" : "⚠️ (Offline Mode)";
-    console.log(`${status} Rural Employment Hub Server running on port ${PORT}`);
-    console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
-    console.log(`🌍 CORS Origin: ${process.env.CORS_ORIGIN || "http://localhost:5173"}`);
-  });
+if (process.env.VERCEL !== "1") {
+  connectDB().then((connected) => {
+    const server = app.listen(PORT, () => {
+      const status = connected ? "🚀" : "⚠️ (Offline Mode)";
+      console.log(`${status} Rural Employment Hub Server running on port ${PORT}`);
+      console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(`🌍 CORS Origin: ${configuredCorsOrigin}`);
+    });
 
-  server.on("error", (error) => {
-    if (error.code === "EADDRINUSE") {
-      console.error(`❌ Port ${PORT} is already in use. Stop the existing server before starting another one.`);
+    server.on("error", (error) => {
+      if (error.code === "EADDRINUSE") {
+        console.error(`❌ Port ${PORT} is already in use. Stop the existing server before starting another one.`);
+        process.exit(1);
+      }
+
+      console.error(`❌ Server error: ${error.message}`);
       process.exit(1);
-    }
-
-    console.error(`❌ Server error: ${error.message}`);
-    process.exit(1);
+    });
   });
-});
+} else {
+  connectDB();
+}
 
 // ============ GRACEFUL SHUTDOWN ============
 process.on("SIGINT", () => {
