@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Reset & Smooth Transitions */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Global Government Theme Background */
+body {
+  @apply bg-[#fcfaf5] dark:bg-[#071308] text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Custom UI Components & Design Tokens */
+@layer components {
+  /* Government Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-[0.98] whitespace-nowrap;
+  }
+
+  .btn-primary {
+    @apply bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-sm shadow-emerald-700/30 border border-emerald-500/40;
+  }
+
+  .btn-secondary {
+    @apply bg-sky-600 hover:bg-sky-700 text-white font-bold shadow-sm shadow-sky-700/30 border border-sky-500/40;
+  }
+
+  .btn-saffron {
+    @apply bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-sm shadow-amber-700/30 border border-amber-500/40;
+  }
+
+  .btn-outline {
+    @apply bg-emerald-50/70 hover:bg-emerald-100/90 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700/60 font-semibold;
+  }
+
+  .btn-dark {
+    @apply bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 hover:border-emerald-600/60 shadow-sm;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80;
+  }
+
+  /* Government Cards */
+  .card {
+    @apply bg-white dark:bg-[#0d1e0f] rounded-2xl border border-slate-200/80 dark:border-emerald-900/40 shadow-sm hover:shadow-md transition-all duration-200 p-6;
+  }
+
+  .card-gov {
+    @apply bg-gradient-to-br from-white via-emerald-50/20 to-white dark:from-[#0d1e0f] dark:via-[#0f2412] dark:to-[#0d1e0f] rounded-2xl border border-emerald-200/60 dark:border-emerald-800/40 shadow-gov p-6;
+  }
+
+  .card-glass {
+    @apply bg-white/75 dark:bg-[#0d1e0f]/80 backdrop-blur-md rounded-2xl border border-white/50 dark:border-emerald-800/30 shadow-lg p-6;
+  }
+
+  /* Inputs & Form Controls */
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-emerald-900/60 bg-white dark:bg-[#08170a] text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-sm;
+  }
+
+  .select {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-emerald-900/60 bg-white dark:bg-[#08170a] text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition text-sm;
+  }
+
+  /* Government Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold tracking-wide;
+  }
+
+  .badge-emerald {
+    @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800;
+  }
+
+  .badge-sky {
+    @apply bg-sky-100 text-sky-800 dark:bg-sky-950/80 dark:text-sky-300 border border-sky-300 dark:border-sky-800;
+  }
+
+  .badge-saffron {
+    @apply bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border border-amber-300 dark:border-amber-800;
+  }
+
+  .badge-rose {
+    @apply bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300 border border-rose-300 dark:border-rose-800;
+  }
+
+  /* Government Header Seal Strip */
+  .gov-header-strip {
+    @apply h-1.5 w-full bg-gradient-to-r from-saffron-500 via-white dark:via-slate-200 to-emerald-600 shadow-sm;
+  }
+}
+
+@layer utilities {
+  .shadow-xs {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-[#050f06];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-emerald-600/40 dark:bg-emerald-700/50 rounded-full hover:bg-emerald-600/70;
+}
+
+/* Glass & Glow Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(5, 150, 105, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(5, 150, 105, 0.4);
+  }
+}
+
+.glow-emerald {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
